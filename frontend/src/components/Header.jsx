@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
 
 const NAV_LINKS = [
@@ -10,6 +11,7 @@ const NAV_LINKS = [
 
 export const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -31,7 +33,7 @@ export const Header = () => {
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
         <Logo />
-        <nav className="flex items-center gap-1 sm:gap-2">
+        <nav className="hidden items-center gap-2 sm:flex">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
@@ -50,7 +52,51 @@ export const Header = () => {
             Let's talk
           </a>
         </nav>
+        <button
+          type="button"
+          onClick={() => setMenuOpen((v) => !v)}
+          data-testid="nav-mobile-toggle"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-ivory transition-colors duration-300 hover:border-terra hover:text-terra sm:hidden"
+        >
+          {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </div>
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.nav
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            data-testid="nav-mobile-menu"
+            className="overflow-hidden border-b border-white/5 bg-ink/90 backdrop-blur-xl sm:hidden"
+          >
+            <div className="flex flex-col gap-1 px-5 pb-5 pt-2">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  data-testid={`nav-mobile-${link.label.toLowerCase()}-link`}
+                  className="rounded-xl px-4 py-3 font-display text-xl text-ivory transition-colors duration-300 hover:bg-white/5 hover:text-sand"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a
+                href="#contact"
+                onClick={() => setMenuOpen(false)}
+                data-testid="nav-mobile-cta-link"
+                className="mt-2 rounded-full bg-terra px-4 py-3 text-center text-sm font-semibold text-ink transition-transform duration-300 active:scale-95"
+              >
+                Let's talk
+              </a>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 };
