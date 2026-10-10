@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 258 19% 6%;
+    --foreground: 51 47% 91%;
+    --card: 258 14% 11%;
+    --card-foreground: 51 47% 91%;
+    --popover: 258 14% 11%;
+    --popover-foreground: 51 47% 91%;
+    --primary: 14 65% 63%;
+    --primary-foreground: 258 19% 6%;
+    --secondary: 39 75% 75%;
+    --secondary-foreground: 258 19% 6%;
+    --muted: 258 10% 16%;
+    --muted-foreground: 38 14% 61%;
+    --accent: 258 10% 16%;
+    --accent-foreground: 51 47% 91%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 285 11% 18%;
+    --input: 285 11% 18%;
+    --ring: 14 65% 63%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #0f0d13;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #e07a5f;
+  color: #0f0d13;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0d13;
+}
+::-webkit-scrollbar-thumb {
+  background: #2c2633;
+  border-radius: 999px;
+  border: 2px solid #0f0d13;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e07a5f;
+}
+
+.text-stroke-ivory {
+  -webkit-text-stroke: 1px rgba(244, 241, 222, 0.28);
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
